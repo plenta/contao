@@ -156,7 +156,7 @@ class BackendController extends AbstractController
         return new RedirectResponse($picker->getCurrentUrl());
     }
 
-    #[Route('/{parameters}', name: 'contao_backend_fallback', requirements: ['parameters' => '.*'], defaults: ['statusCode' => 404], priority: -1000)]
+    #[Route('/{parameters}', name: 'contao_backend_fallback', requirements: ['parameters' => '.*'], priority: -1000)]
     public function backendFallback(): Response
     {
         return $this->render('@ContaoCore/Error/backend.html.twig', [
@@ -164,7 +164,7 @@ class BackendController extends AbstractController
             'statusName' => 'Page Not Found',
             'exception' => 'The requested page does not exist.',
             'template' => '@ContaoCore/Error/backend.html.twig',
-        ]);
+        ], new Response('', 404));
     }
 
     public static function getSubscribedServices(): array
